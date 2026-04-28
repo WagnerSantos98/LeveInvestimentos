@@ -1073,7 +1073,10 @@
         },
         "runtime": {
           "bin/placeholder/LeveInvestimentos.Infrastructure.dll": {}
-        }
+        },
+        "frameworkReferences": [
+          "Microsoft.AspNetCore.App"
+        ]
       }
     }
   },
