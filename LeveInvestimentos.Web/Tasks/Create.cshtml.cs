@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace LeveInvest.Web.Pages.Tasks
+namespace LeveInvestimentos.Web.Pages.Tasks
 {
     [Authorize(Policy = "ManagerOnly")]
     public class CreateModel : PageModel
