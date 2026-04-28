@@ -5,33 +5,37 @@
 }
 
 <div class="uk-flex uk-flex-between uk-flex-middle uk-margin-bottom">
-    <h3>Tarefas</h3>
+    <h3 class="uk-margin-remove">Tarefas</h3>
+
     @if (User.HasClaim("IsManager", "True"))
     {
-        <a href="/Tasks/Create" class="uk-button uk-button-primary">Nova Tarefa</a>
+        <a href="/Tasks/Create" class="uk-button uk-button-primary">
+            + Nova Tarefa
+        </a>
     }
 </div>
 
 <ul uk-tab>
-    <li><a href="#">Minhas Tarefas (Atribuídas)</a></li>
+    <li><a href="#">Minhas Tarefas</a></li>
     @if (User.HasClaim("IsManager", "True"))
     {
-        <li><a href="#">Tarefas Criadas por Mim</a></li>
+        <li><a href="#">Criadas por Mim</a></li>
     }
 </ul>
 
 <ul class="uk-switcher uk-margin">
-    <!-- Minhas Tarefas -->
+
+    <!-- ================= MINHAS TAREFAS ================= -->
     <li>
         <div class="uk-overflow-auto">
-            <table class="uk-table uk-table-striped uk-table-hover">
+            <table class="uk-table uk-table-divider uk-table-hover uk-table-middle">
                 <thead>
                     <tr>
                         <th>Descrição</th>
                         <th>Criador</th>
-                        <th>Data Limite</th>
+                        <th>Data</th>
                         <th>Status</th>
-                        <th>Ações</th>
+                        <th class="uk-text-center">Ações</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -41,6 +45,8 @@
                             <td>@task.Description</td>
                             <td>@task.Creator?.FullName</td>
                             <td>@task.DueDate.ToString("dd/MM/yyyy")</td>
+
+                            <!-- STATUS -->
                             <td>
                                 @if (task.Status == LeveInvestimentos.Domain.Enums.AppTaskStatus.Pending)
                                 {
@@ -51,36 +57,91 @@
                                     <span class="uk-label uk-label-success">Concluída</span>
                                 }
                             </td>
-                            <td>
-                                @if (task.Status == LeveInvestimentos.Domain.Enums.AppTaskStatus.Pending)
-                                {
-                                    <form method="post" asp-page-handler="Complete" asp-route-id="@task.Id" style="display:inline;">
-                                        <button class="uk-button uk-button-small uk-button-secondary" type="submit">Concluir</button>
-                                    </form>
-                                }
+
+                            <!-- AÇÕES -->
+                            <td class="uk-text-center">
+                                <div class="uk-button-group">
+
+                                    <!-- VER -->
+                                    <a href="/Tasks/Details/@task.Id"
+                                       class="uk-button uk-button-small">
+                                        Ver
+                                    </a>
+
+                                    <!-- EDITAR -->
+                                    <a href="/Tasks/Edit/@task.Id"
+                                       class="uk-button uk-button-small uk-button-default">
+                                        Editar
+                                    </a>
+
+                                    <!-- CONCLUIR -->
+                                    @if (task.Status == LeveInvestimentos.Domain.Enums.AppTaskStatus.Pending)
+                                    {
+                                        <form method="post"
+                                              asp-page-handler="Complete"
+                                              asp-route-id="@task.Id"
+                                              style="display:inline;">
+                                            <button class="uk-button uk-button-small uk-button-secondary">
+                                                Concluir
+                                            </button>
+                                        </form>
+                                    }
+                                    else
+                                    {
+                                        <!-- REABRIR -->
+                                        <form method="post"
+                                              asp-page-handler="Reopen"
+                                              asp-route-id="@task.Id"
+                                              style="display:inline;">
+                                            <button class="uk-button uk-button-small">
+                                                Reabrir
+                                            </button>
+                                        </form>
+                                    }
+
+                                    <!-- EXCLUIR (SÓ MANAGER) -->
+                                    @if (User.HasClaim("IsManager", "True"))
+                                    {
+                                        <form method="post"
+                                              asp-page-handler="Delete"
+                                              asp-route-id="@task.Id"
+                                              style="display:inline;"
+                                              onsubmit="return confirm('Deseja realmente excluir esta tarefa?');">
+                                            <button class="uk-button uk-button-small uk-button-danger">
+                                                Excluir
+                                            </button>
+                                        </form>
+                                    }
+
+                                </div>
                             </td>
                         </tr>
                     }
+
                     @if (!Model.AssignedTasks.Any())
                     {
-                        <tr><td colspan="5" class="uk-text-center">Nenhuma tarefa encontrada.</td></tr>
+                        <tr>
+                            <td colspan="5" class="uk-text-center">
+                                Nenhuma tarefa encontrada.
+                            </td>
+                        </tr>
                     }
                 </tbody>
             </table>
         </div>
     </li>
 
+    <!-- ================= CRIADAS POR MIM ================= -->
     @if (User.HasClaim("IsManager", "True"))
     {
-        <!-- Tarefas Criadas -->
         <li>
             <div class="uk-overflow-auto">
-                <table class="uk-table uk-table-striped uk-table-hover">
+                <table class="uk-table uk-table-divider uk-table-hover uk-table-middle">
                     <thead>
                         <tr>
                             <th>Descrição</th>
                             <th>Responsável</th>
-                            <th>Data Limite</th>
+                            <th>Data</th>
                             <th>Status</th>
                         </tr>
                     </thead>
@@ -91,6 +152,7 @@
                                 <td>@task.Description</td>
                                 <td>@task.Assignee?.FullName</td>
                                 <td>@task.DueDate.ToString("dd/MM/yyyy")</td>
+
                                 <td>
                                     @if (task.Status == LeveInvestimentos.Domain.Enums.AppTaskStatus.Pending)
                                     {
@@ -103,9 +165,14 @@
                                 </td>
                             </tr>
                         }
+
                         @if (!Model.CreatedTasks.Any())
                         {
-                            <tr><td colspan="4" class="uk-text-center">Nenhuma tarefa criada.</td></tr>
+                            <tr>
+                                <td colspan="4" class="uk-text-center">
+                                    Nenhuma tarefa criada.
+                                </td>
+                            </tr>
                         }
                     </tbody>
                 </table>
