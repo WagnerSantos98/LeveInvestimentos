@@ -43,11 +43,54 @@ namespace LeveInvestimentos.Web.Pages.Tasks
         public async Task<IActionResult> OnPostCompleteAsync(Guid id)
         {
             var userId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
-            
+
             try
             {
                 await _taskService.MarkAsCompletedAsync(id, userId);
                 TempData["SuccessMessage"] = "Tarefa concluída com sucesso!";
+            }
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = ex.Message;
+            }
+
+            return RedirectToPage("/Tasks/Index");
+        }
+
+        // Reabir tarefa
+        public async Task<IActionResult> OnPostReopenAsync(Guid id)
+        {
+            var userId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+
+            try
+            {
+                await _taskService.ReopenAsync(id, userId);
+                TempData["SuccessMessage"] = "Tarefa reaberta com sucesso!";
+            }
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = ex.Message;
+            }
+
+            return RedirectToPage("/Tasks/Index");
+        }
+
+        // Excluir tarefa
+        public async Task<IActionResult> OnPostDeleteAsync(Guid id)
+        {
+            var userId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+
+            // Segurança extra de confirmação
+            if (!User.HasClaim("IsManager", "True"))
+            {
+                TempData["ErrorMessage"] = "Você não tem permissão para excluir tarefas.";
+                return RedirectToPage("/Tasks/Index");
+            }
+
+            try
+            {
+                await _taskService.DeleteAsync(id, userId);
+                TempData["SuccessMessage"] = "Tarefa excluída com sucesso!";
             }
             catch (Exception ex)
             {

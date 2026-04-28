@@ -68,20 +68,75 @@ namespace LeveInvestimentos.Infrastructure.Services
 
         public async Task MarkAsCompletedAsync(Guid taskId, Guid userId)
         {
-            var task = await _context.Tasks.Include(t => t.Creator).FirstOrDefaultAsync(t => t.Id == taskId);
-            if (task == null) return;
+            var task = await _context.Tasks
+                .Include(t => t.Creator)
+                .FirstOrDefaultAsync(t => t.Id == taskId);
 
-            // Only assignee can complete it (or manager, but let's say assignee)
+                if (task == null) throw new Exception("Tarefa não encontrada.");
+
+            // Somente o responsável pode preenchê-lo (ou o gerente, mas vamos considerar o responsável).
             if (task.AssigneeId != userId) throw new UnauthorizedAccessException("Somente o responsável pode concluir a tarefa.");
+
+            if (task.Status == AppTaskStatus.Completed) return; 
 
             task.Status = AppTaskStatus.Completed;
             await _context.SaveChangesAsync();
 
-            // Notify Creator
+            // Notificar o criador
             if (task.Creator != null)
             {
                 await _emailService.SendEmailAsync(task.Creator.Email, "Tarefa Concluída", $"A tarefa '{task.Description}' foi concluída.");
             }
+        }
+
+        // Reabrir tarefa
+        public async Task ReopenAsync(Guid taskId, Guid userId)
+        {
+            var task = await _context.Tasks
+                .Include(t => t.Creator)
+                .FirstOrDefaultAsync(t => t.Id == taskId);
+
+            if (task == null)
+                throw new Exception("Tarefa não encontrada.");
+
+            // Pode ser o responsável ou quem criou
+            if (task.AssigneeId != userId && task.CreatorId != userId)
+                throw new UnauthorizedAccessException("Você não tem permissão para reabrir esta tarefa.");
+
+            if (task.Status == AppTaskStatus.Pending)
+                return;
+
+            task.Status = AppTaskStatus.Pending;
+
+            await _context.SaveChangesAsync();
+
+            // Notifica o responsável
+            var assignee = await _context.Users.FindAsync(task.AssigneeId);
+            if (assignee != null)
+            {
+                await _emailService.SendEmailAsync(
+                    assignee.Email,
+                    "Tarefa Reaberta",
+                    $"A tarefa '{task.Description}' foi reaberta."
+                );
+            }
+        }
+
+        // Excluir tarefa
+        public async Task DeleteAsync(Guid taskId, Guid userId)
+        {
+            var task = await _context.Tasks.FirstOrDefaultAsync(t => t.Id == taskId);
+
+            if (task == null)
+                throw new Exception("Tarefa não encontrada.");
+
+            // Regra: só quem criou pode excluir (ou você pode adaptar pra manager)
+            if (task.CreatorId != userId)
+                throw new UnauthorizedAccessException("Somente o criador pode excluir a tarefa.");
+
+            _context.Tasks.Remove(task);
+
+            await _context.SaveChangesAsync();
         }
     }
 }

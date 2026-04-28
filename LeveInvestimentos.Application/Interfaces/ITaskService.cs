@@ -12,5 +12,7 @@ namespace LeveInvestimentos.Application.Interfaces
         Task<IEnumerable<AppTask>> GetAllByAssigneeAsync(Guid assigneeId);
         Task<AppTask> CreateAsync(AppTask task);
         Task MarkAsCompletedAsync(Guid taskId, Guid userId);
+        Task ReopenAsync(Guid taskId, Guid userId);
+        Task DeleteAsync(Guid taskId, Guid userId);
     }
 }
