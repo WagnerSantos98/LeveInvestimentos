@@ -74,33 +74,33 @@
         <div class="uk-width-1-4@s">
             <label class="uk-form-label">CEP</label>
             <div class="uk-form-controls">
-                <input id="cep" class="uk-input" placeholder="00000-000" />
+                <input id="cep" class="uk-input" placeholder="00000-000" asp-for="Input.ZipCode" />
             </div>
         </div>
 
         <div class="uk-width-2-3@s">
             <label class="uk-form-label">Rua</label>
-            <input id="logradouro" class="uk-input" asp-for="Input.Address" required disabled/>
+            <input id="logradouro" class="uk-input"  asp-for="Input.Street" required disabled/>
         </div>
 
         <div class="uk-width-1-5@s">
             <label class="uk-form-label">Número</label>
-            <input class="uk-input" asp-for="Input.MobilePhone" required />
+            <input class="uk-input" asp-for="Input.Number" required />
         </div>
 
         <div class="uk-width-1-2@s">
             <label class="uk-form-label">Bairro</label>
-            <input id="bairro" class="uk-input" disabled/>
+            <input id="bairro" class="uk-input" asp-for="Input.Neighborhood" disabled/>
         </div>
 
         <div class="uk-width-1-4@s">
             <label class="uk-form-label">Cidade</label>
-            <input id="cidade" class="uk-input" disabled/>
+            <input id="cidade" class="uk-input" asp-for="Input.City" disabled/>
         </div>
 
         <div class="uk-width-1-4@s">
             <label class="uk-form-label">UF</label>
-            <input id="uf" class="uk-input" disabled/>
+            <input id="uf" class="uk-input" asp-for="Input.State" disabled/>
         </div>
 
         <!-- ================= ACESSO ================= -->

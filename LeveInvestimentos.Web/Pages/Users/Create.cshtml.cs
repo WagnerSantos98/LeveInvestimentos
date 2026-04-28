@@ -39,8 +39,20 @@ namespace LeveInvestimentos.Web.Pages.Users
             [Required(ErrorMessage = "Celular é obrigatório")]
             public string MobilePhone { get; set; }
 
-            [Required(ErrorMessage = "Endereço é obrigatório")]
-            public string Address { get; set; }
+            [Required]
+            public string ZipCode { get; set; }
+
+            [Required]
+            public string Street { get; set; }
+
+            [Required]
+            public string Number { get; set; }
+
+            public string Neighborhood { get; set; }
+
+            public string City { get; set; }
+
+            public string State { get; set; }
 
             public string PhotoUrl { get; set; }
 
@@ -65,7 +77,7 @@ namespace LeveInvestimentos.Web.Pages.Users
                 BirthDate = Input.BirthDate,
                 LandlinePhone = Input.LandlinePhone,
                 MobilePhone = Input.MobilePhone,
-                Address = Input.Address,
+                Address =  $"{Input.Street}, {Input.Number} - {Input.Neighborhood}, {Input.City}/{Input.State} - CEP: {Input.ZipCode}",
                 PhotoUrl = Input.PhotoUrl,
                 IsManager = Input.IsManager
             };
