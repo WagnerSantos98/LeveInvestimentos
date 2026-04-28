@@ -1,12 +1,13 @@
-using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace LeveInvestimentos.Web.Pages;
-
-public class IndexModel : PageModel
+namespace LeveInvestimentos.Web.Pages
 {
-    public void OnGet()
+    [Authorize]
+    public class IndexModel : PageModel
     {
-
+        public void OnGet()
+        {
+        }
     }
 }

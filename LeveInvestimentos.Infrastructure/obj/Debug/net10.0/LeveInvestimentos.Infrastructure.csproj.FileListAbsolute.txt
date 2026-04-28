@@ -1,0 +1,6 @@
+C:\Users\Wagner\Desktop\LeveInvestimentos\LeveInvestimentos.Infrastructure\obj\Debug\net10.0\LeveInvestimentos.Infrastructure.csproj.AssemblyReference.cache
+C:\Users\Wagner\Desktop\LeveInvestimentos\LeveInvestimentos.Infrastructure\obj\Debug\net10.0\LeveInvestimentos.Infrastructure.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Wagner\Desktop\LeveInvestimentos\LeveInvestimentos.Infrastructure\obj\Debug\net10.0\LeveInvestimentos.Infrastructure.AssemblyInfoInputs.cache
+C:\Users\Wagner\Desktop\LeveInvestimentos\LeveInvestimentos.Infrastructure\obj\Debug\net10.0\LeveInvestimentos.Infrastructure.AssemblyInfo.cs
+C:\Users\Wagner\Desktop\LeveInvestimentos\LeveInvestimentos.Infrastructure\obj\Debug\net10.0\LeveInvestimentos.Infrastructure.csproj.CoreCompileInputs.cache
+C:\Users\Wagner\Desktop\LeveInvestimentos\LeveInvestimentos.Infrastructure\obj\Debug\net10.0\LeveInvestimentos.Infrastructure.sourcelink.json

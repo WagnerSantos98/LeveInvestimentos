@@ -1,0 +1,12 @@
+C:\Users\Wagner\Desktop\LeveInvestimentos\LeveInvestimentos.Domain\bin\Debug\net10.0\LeveInvestimentos.Domain.deps.json
+C:\Users\Wagner\Desktop\LeveInvestimentos\LeveInvestimentos.Domain\bin\Debug\net10.0\LeveInvestimentos.Domain.dll
+C:\Users\Wagner\Desktop\LeveInvestimentos\LeveInvestimentos.Domain\bin\Debug\net10.0\LeveInvestimentos.Domain.pdb
+C:\Users\Wagner\Desktop\LeveInvestimentos\LeveInvestimentos.Domain\obj\Debug\net10.0\LeveInvestimentos.Domain.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Wagner\Desktop\LeveInvestimentos\LeveInvestimentos.Domain\obj\Debug\net10.0\LeveInvestimentos.Domain.AssemblyInfoInputs.cache
+C:\Users\Wagner\Desktop\LeveInvestimentos\LeveInvestimentos.Domain\obj\Debug\net10.0\LeveInvestimentos.Domain.AssemblyInfo.cs
+C:\Users\Wagner\Desktop\LeveInvestimentos\LeveInvestimentos.Domain\obj\Debug\net10.0\LeveInvestimentos.Domain.csproj.CoreCompileInputs.cache
+C:\Users\Wagner\Desktop\LeveInvestimentos\LeveInvestimentos.Domain\obj\Debug\net10.0\LeveInvestimentos.Domain.sourcelink.json
+C:\Users\Wagner\Desktop\LeveInvestimentos\LeveInvestimentos.Domain\obj\Debug\net10.0\LeveInvestimentos.Domain.dll
+C:\Users\Wagner\Desktop\LeveInvestimentos\LeveInvestimentos.Domain\obj\Debug\net10.0\refint\LeveInvestimentos.Domain.dll
+C:\Users\Wagner\Desktop\LeveInvestimentos\LeveInvestimentos.Domain\obj\Debug\net10.0\LeveInvestimentos.Domain.pdb
+C:\Users\Wagner\Desktop\LeveInvestimentos\LeveInvestimentos.Domain\obj\Debug\net10.0\ref\LeveInvestimentos.Domain.dll

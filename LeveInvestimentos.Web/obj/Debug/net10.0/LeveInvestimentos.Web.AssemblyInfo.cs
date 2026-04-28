@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("LeveInvestimentos.Web")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f7d981f1f2a33eedd45eb02f564c67155ed4c8f4")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+98a0e774f81390b5e4bf3e63595026ce8bd759c6")]
 [assembly: System.Reflection.AssemblyProductAttribute("LeveInvestimentos.Web")]
 [assembly: System.Reflection.AssemblyTitleAttribute("LeveInvestimentos.Web")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

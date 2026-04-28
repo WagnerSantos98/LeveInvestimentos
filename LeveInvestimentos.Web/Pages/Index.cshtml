@@ -1,10 +1,31 @@
-﻿@page
+﻿@page "/"
 @model IndexModel
 @{
-    ViewData["Title"] = "Home page";
+    ViewData["Title"] = "Dashboard";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="uk-card uk-card-default uk-card-body uk-margin-bottom">
+    <h3 class="uk-card-title">Bem-vindo(a) ao LeveInvestimentos!</h3>
+    <p>Utilize o menu acima para navegar pelo sistema.</p>
+</div>
+
+<div class="uk-grid-match uk-child-width-1-2@m" uk-grid>
+    <div>
+        <div class="uk-card uk-card-primary uk-card-body">
+            <h3 class="uk-card-title">Suas Tarefas</h3>
+            <p>Gerencie as tarefas atribuídas a você.</p>
+            <a href="/Tasks" class="uk-button uk-button-default">Ver Tarefas</a>
+        </div>
+    </div>
+    
+    @if (User.HasClaim("IsManager", "True"))
+    {
+        <div>
+            <div class="uk-card uk-card-secondary uk-card-body">
+                <h3 class="uk-card-title">Gestão de Equipe</h3>
+                <p>Cadastre novos usuários e acompanhe suas atividades.</p>
+                <a href="/Users" class="uk-button uk-button-default">Ver Usuários</a>
+            </div>
+        </div>
+    }
 </div>
