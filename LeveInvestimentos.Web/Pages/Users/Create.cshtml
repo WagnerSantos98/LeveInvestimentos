@@ -5,11 +5,18 @@
 }
 
 <div class="uk-flex uk-flex-between uk-flex-middle uk-margin-bottom">
-    <h3>Novo Usuário</h3>
-    <a href="/Users" class="uk-button uk-button-default">Voltar</a>
+    <div>
+        <h3 class="uk-margin-remove">Novo Usuário</h3>
+        <span class="uk-text-meta">Preencha os dados para cadastrar um novo usuário</span>
+    </div>
+
+    <a href="/Users" class="uk-button uk-button-default">
+        ← Voltar
+    </a>
 </div>
 
-<div class="uk-card uk-card-default uk-card-body">
+<div class="uk-card uk-card-default uk-card-body uk-border-rounded">
+
     @if (!ModelState.IsValid)
     {
         <div class="uk-alert-danger" uk-alert>
@@ -17,61 +24,133 @@
         </div>
     }
 
-    <form method="post" class="uk-grid-small" uk-grid>
+    <form method="post" class="uk-grid-medium" uk-grid>
+
+        <!-- ================= DADOS PESSOAIS ================= -->
+        <div class="uk-width-1-1">
+            <h5 class="uk-heading-line"><span>Dados Pessoais</span></h5>
+        </div>
+
         <div class="uk-width-1-2@s">
             <label class="uk-form-label">Nome Completo</label>
-            <div class="uk-form-controls">
-                <input class="uk-input" asp-for="Input.FullName" required />
-            </div>
+            <input class="uk-input" asp-for="Input.FullName" required />
         </div>
+
         <div class="uk-width-1-2@s">
             <label class="uk-form-label">E-mail</label>
-            <div class="uk-form-controls">
-                <input class="uk-input" type="email" asp-for="Input.Email" required />
-            </div>
+            <input class="uk-input" type="email" asp-for="Input.Email" required />
         </div>
+
         <div class="uk-width-1-2@s">
             <label class="uk-form-label">Data de Nascimento</label>
-            <div class="uk-form-controls">
-                <input class="uk-input" type="date" asp-for="Input.BirthDate" required />
-            </div>
+            <input class="uk-input" type="date" asp-for="Input.BirthDate" required />
         </div>
-        <div class="uk-width-1-2@s">
-            <label class="uk-form-label">Telefone Fixo</label>
-            <div class="uk-form-controls">
-                <input class="uk-input" asp-for="Input.LandlinePhone" />
-            </div>
-        </div>
-        <div class="uk-width-1-2@s">
-            <label class="uk-form-label">Telefone Celular</label>
-            <div class="uk-form-controls">
-                <input class="uk-input" asp-for="Input.MobilePhone" required />
-            </div>
-        </div>
-        <div class="uk-width-1-2@s">
-            <label class="uk-form-label">Endereço</label>
-            <div class="uk-form-controls">
-                <input class="uk-input" asp-for="Input.Address" required />
-            </div>
-        </div>
+
         <div class="uk-width-1-2@s">
             <label class="uk-form-label">URL da Foto</label>
+            <input class="uk-input" asp-for="Input.PhotoUrl" />
+        </div>
+
+        <!-- ================= CONTATO ================= -->
+        <div class="uk-width-1-1 uk-margin-top">
+            <h5 class="uk-heading-line"><span>Contato</span></h5>
+        </div>
+
+        <div class="uk-width-1-2@s">
+            <label class="uk-form-label">Telefone Celular</label>
+            <input class="uk-input" asp-for="Input.MobilePhone" required />
+        </div>
+
+        <div class="uk-width-1-2@s">
+            <label class="uk-form-label">Telefone Fixo</label>
+            <input class="uk-input" asp-for="Input.LandlinePhone" />
+        </div>
+
+        <!-- ================= ENDEREÇO ================= -->
+        <div class="uk-width-1-1 uk-margin-top">
+            <h5 class="uk-heading-line"><span>Endereço</span></h5>
+        </div>
+
+        <div class="uk-width-1-4@s">
+            <label class="uk-form-label">CEP</label>
             <div class="uk-form-controls">
-                <input class="uk-input" asp-for="Input.PhotoUrl" />
+                <input id="cep" class="uk-input" placeholder="00000-000" />
             </div>
         </div>
+
+        <div class="uk-width-2-3@s">
+            <label class="uk-form-label">Rua</label>
+            <input id="logradouro" class="uk-input" asp-for="Input.Address" required disabled/>
+        </div>
+
+        <div class="uk-width-1-5@s">
+            <label class="uk-form-label">Número</label>
+            <input class="uk-input" asp-for="Input.MobilePhone" required />
+        </div>
+
+        <div class="uk-width-1-2@s">
+            <label class="uk-form-label">Bairro</label>
+            <input id="bairro" class="uk-input" disabled/>
+        </div>
+
+        <div class="uk-width-1-4@s">
+            <label class="uk-form-label">Cidade</label>
+            <input id="cidade" class="uk-input" disabled/>
+        </div>
+
+        <div class="uk-width-1-4@s">
+            <label class="uk-form-label">UF</label>
+            <input id="uf" class="uk-input" disabled/>
+        </div>
+
+        <!-- ================= ACESSO ================= -->
+        <div class="uk-width-1-1 uk-margin-top">
+            <h5 class="uk-heading-line"><span>Acesso</span></h5>
+        </div>
+
         <div class="uk-width-1-2@s">
             <label class="uk-form-label">Senha Provisória</label>
-            <div class="uk-form-controls">
-                <input class="uk-input" type="password" asp-for="Input.Password" required />
-            </div>
+            <input class="uk-input" type="password" asp-for="Input.Password" required />
         </div>
-        <div class="uk-width-1-1 uk-margin-top">
-            <label><input class="uk-checkbox" type="checkbox" asp-for="Input.IsManager"> Este usuário é um Gestor</label>
+
+        <div class="uk-width-1-2@s uk-flex uk-flex-middle">
+            <label class="uk-margin-top">
+                <input class="uk-checkbox" type="checkbox" asp-for="Input.IsManager">
+                <span class="uk-margin-small-left">Usuário é Gestor</span>
+            </label>
         </div>
-        
-        <div class="uk-width-1-1 uk-margin-top">
-            <button class="uk-button uk-button-primary" type="submit">Salvar Usuário</button>
+
+        <!-- ================= AÇÕES ================= -->
+        <div class="uk-width-1-1 uk-margin-large-top uk-flex uk-flex-right">
+            <button class="uk-button uk-button-primary uk-button-large">
+                Salvar Usuário
+            </button>
         </div>
+
     </form>
 </div>
+
+<script>
+    document.getElementById("cep").addEventListener("blur", async function () {
+        let cep = this.value.replace(/\D/g, '');
+
+        if (cep.length !== 8) return;
+
+        try {
+            const response = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
+            const data = await response.json();
+
+            if (data.erro) {
+                alert("CEP não encontrado");
+                return;
+            }
+
+            document.getElementById("logradouro").value = data.logradouro || '';
+            document.getElementById("bairro").value = data.bairro || '';
+            document.getElementById("cidade").value = data.localidade || '';
+            document.getElementById("uf").value = data.uf || '';
+        } catch {
+            alert("Erro ao buscar CEP");
+        }
+    });
+</script>
