@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="LeveInvestimentos.Application/LeveInvestimentos.Application.csproj" />
+  <Project Path="LeveInvestimentos.Domain/LeveInvestimentos.Domain.csproj" />
+  <Project Path="LeveInvestimentos.Infrastructure/LeveInvestimentos.Infrastructure.csproj" />
+  <Project Path="LeveInvestimentos.Web/LeveInvestimentos.Web.csproj" />
+</Solution>
