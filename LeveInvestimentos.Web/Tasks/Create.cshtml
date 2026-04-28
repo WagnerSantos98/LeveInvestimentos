@@ -1,0 +1,50 @@
+@page "/Tasks/Create"
+@model LeveInvestimentos.Web.Pages.Tasks.CreateModel
+@{
+    ViewData["Title"] = "Criar Tarefa";
+}
+
+<div class="uk-flex uk-flex-between uk-flex-middle uk-margin-bottom">
+    <h3>Nova Tarefa</h3>
+    <a href="/Tasks" class="uk-button uk-button-default">Voltar</a>
+</div>
+
+<div class="uk-card uk-card-default uk-card-body">
+    @if (!ModelState.IsValid)
+    {
+        <div class="uk-alert-danger" uk-alert>
+            <div asp-validation-summary="All" class="uk-text-small"></div>
+        </div>
+    }
+
+    <form method="post" class="uk-grid-small" uk-grid>
+        <div class="uk-width-1-1">
+            <label class="uk-form-label">Descrição da Tarefa</label>
+            <div class="uk-form-controls">
+                <input class="uk-input" asp-for="Input.Description" required />
+            </div>
+        </div>
+        <div class="uk-width-1-2@s">
+            <label class="uk-form-label">Data Limite</label>
+            <div class="uk-form-controls">
+                <input class="uk-input" type="date" asp-for="Input.DueDate" required />
+            </div>
+        </div>
+        <div class="uk-width-1-2@s">
+            <label class="uk-form-label">Atribuir para</label>
+            <div class="uk-form-controls">
+                <select class="uk-select" asp-for="Input.AssigneeId" required>
+                    <option value="">Selecione um usuário...</option>
+                    @foreach (var user in Model.Users)
+                    {
+                        <option value="@user.Id">@user.FullName (@user.Email)</option>
+                    }
+                </select>
+            </div>
+        </div>
+        
+        <div class="uk-width-1-1 uk-margin-top">
+            <button class="uk-button uk-button-primary" type="submit">Atribuir Tarefa</button>
+        </div>
+    </form>
+</div>

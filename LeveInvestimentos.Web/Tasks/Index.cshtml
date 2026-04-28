@@ -1,0 +1,115 @@
+@page "/Tasks"
+@model LeveInvestimentos.Web.Pages.Tasks.IndexModel
+@{
+    ViewData["Title"] = "Tarefas";
+}
+
+<div class="uk-flex uk-flex-between uk-flex-middle uk-margin-bottom">
+    <h3>Tarefas</h3>
+    @if (User.HasClaim("IsManager", "True"))
+    {
+        <a href="/Tasks/Create" class="uk-button uk-button-primary">Nova Tarefa</a>
+    }
+</div>
+
+<ul uk-tab>
+    <li><a href="#">Minhas Tarefas (Atribuídas)</a></li>
+    @if (User.HasClaim("IsManager", "True"))
+    {
+        <li><a href="#">Tarefas Criadas por Mim</a></li>
+    }
+</ul>
+
+<ul class="uk-switcher uk-margin">
+    <!-- Minhas Tarefas -->
+    <li>
+        <div class="uk-overflow-auto">
+            <table class="uk-table uk-table-striped uk-table-hover">
+                <thead>
+                    <tr>
+                        <th>Descrição</th>
+                        <th>Criador</th>
+                        <th>Data Limite</th>
+                        <th>Status</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var task in Model.AssignedTasks)
+                    {
+                        <tr>
+                            <td>@task.Description</td>
+                            <td>@task.Creator?.FullName</td>
+                            <td>@task.DueDate.ToString("dd/MM/yyyy")</td>
+                            <td>
+                                @if (task.Status == LeveInvestimentos.Domain.Enums.AppTaskStatus.Pending)
+                                {
+                                    <span class="uk-label uk-label-warning">Pendente</span>
+                                }
+                                else
+                                {
+                                    <span class="uk-label uk-label-success">Concluída</span>
+                                }
+                            </td>
+                            <td>
+                                @if (task.Status == LeveInvestimentos.Domain.Enums.AppTaskStatus.Pending)
+                                {
+                                    <form method="post" asp-page-handler="Complete" asp-route-id="@task.Id" style="display:inline;">
+                                        <button class="uk-button uk-button-small uk-button-secondary" type="submit">Concluir</button>
+                                    </form>
+                                }
+                            </td>
+                        </tr>
+                    }
+                    @if (!Model.AssignedTasks.Any())
+                    {
+                        <tr><td colspan="5" class="uk-text-center">Nenhuma tarefa encontrada.</td></tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </li>
+
+    @if (User.HasClaim("IsManager", "True"))
+    {
+        <!-- Tarefas Criadas -->
+        <li>
+            <div class="uk-overflow-auto">
+                <table class="uk-table uk-table-striped uk-table-hover">
+                    <thead>
+                        <tr>
+                            <th>Descrição</th>
+                            <th>Responsável</th>
+                            <th>Data Limite</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var task in Model.CreatedTasks)
+                        {
+                            <tr>
+                                <td>@task.Description</td>
+                                <td>@task.Assignee?.FullName</td>
+                                <td>@task.DueDate.ToString("dd/MM/yyyy")</td>
+                                <td>
+                                    @if (task.Status == LeveInvestimentos.Domain.Enums.AppTaskStatus.Pending)
+                                    {
+                                        <span class="uk-label uk-label-warning">Pendente</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="uk-label uk-label-success">Concluída</span>
+                                    }
+                                </td>
+                            </tr>
+                        }
+                        @if (!Model.CreatedTasks.Any())
+                        {
+                            <tr><td colspan="4" class="uk-text-center">Nenhuma tarefa criada.</td></tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </li>
+    }
+</ul>
