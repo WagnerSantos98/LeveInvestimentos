@@ -1,7 +1,8 @@
-namespace LeveInvestimentos.Domain.Enums;
-
-public enum AppTaskStatus
+namespace LeveInvestimentos.Domain.Enums
 {
-    Pending = 0,
-    Competed = 1
+    public enum AppTaskStatus
+    {
+        Pending,
+        Completed
+    }
 }
