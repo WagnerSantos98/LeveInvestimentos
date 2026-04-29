@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using LeveInvestimentos.Domain.ValueObjects;
+using LeveInvestimentos.Domain.Enums;
 
 namespace LeveInvestimentos.Domain.Entities
 {
@@ -11,10 +13,10 @@ namespace LeveInvestimentos.Domain.Entities
         public string LandlinePhone { get; set; }
         public string MobilePhone { get; set; }
         public string Email { get; set; }
-        public string Address { get; set; }
+        public Address Address { get; set; }
         public string PhotoUrl { get; set; }
         public string PasswordHash { get; set; }
-        public bool IsManager { get; set; }
+        public UserRole Role { get; set; }
 
         public ICollection<AppTask> CreatedTasks { get; set; }
         public ICollection<AppTask> AssignedTasks { get; set; }
