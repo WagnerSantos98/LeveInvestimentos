@@ -6,52 +6,57 @@
     <title>@ViewData["Title"] - LeveInvestimentos</title>
     <!-- UIkit CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.17.11/dist/css/uikit.min.css" />
-    <style>
-        body { background-color: #f8f9fa; }
-        .leve-brand { font-weight: bold; color: #1e87f0 !important; }
-    </style>
+    <!-- Custom Modern CSS -->
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
 </head>
 <body>
+    <div class="mesh-bg"></div>
+
     @if (User.Identity.IsAuthenticated)
     {
-        <nav class="uk-navbar-container uk-margin" uk-navbar>
-            <div class="uk-navbar-left">
-                <a class="uk-navbar-item uk-logo leve-brand" href="/">LeveInvestimentos</a>
+        <nav class="uk-navbar-container uk-margin glass-nav" uk-navbar>
+            <div class="uk-navbar-left uk-margin-left">
+                <a class="uk-navbar-item uk-logo text-gradient" style="font-weight: 800; font-size: 1.5rem;" href="/">LeveInvestimentos</a>
                 <ul class="uk-navbar-nav">
-                    <li><a href="/">Dashboard</a></li>
-                    <li><a href="/Tasks">Tarefas</a></li>
-                    @if (User.HasClaim("IsManager", "True"))
+                    <li><a href="/" class="uk-text-bold">Dashboard</a></li>
+                    <li><a href="/Tasks" class="uk-text-bold">Tarefas</a></li>
+                    @if (User.HasClaim(System.Security.Claims.ClaimTypes.Role, "Manager"))
                     {
-                        <li><a href="/Users">Usuários</a></li>
+                        <li><a href="/Users" class="uk-text-bold">Usuários</a></li>
                     }
                 </ul>
             </div>
-            <div class="uk-navbar-right">
+            <div class="uk-navbar-right uk-margin-right">
                 <ul class="uk-navbar-nav">
                     <li>
-                        <a href="#">Olá, @User.Identity.Name</a>
+                        <a href="#" class="uk-text-bold">
+                            <span class="uk-icon uk-margin-small-right" uk-icon="icon: user"></span>
+                            Olá, @User.Identity.Name
+                        </a>
                     </li>
                     <li>
-                        <a href="/Logout">Sair</a>
+                        <a href="/Logout" class="uk-text-bold uk-text-danger">
+                            <span class="uk-icon uk-margin-small-right" uk-icon="icon: sign-out"></span> Sair
+                        </a>
                     </li>
                 </ul>
             </div>
         </nav>
     }
 
-    <div class="uk-container uk-margin-top uk-margin-bottom">
+    <div class="uk-container uk-margin-large-top uk-margin-large-bottom">
         @if (TempData["SuccessMessage"] != null)
         {
-            <div class="uk-alert-success" uk-alert>
+            <div class="uk-alert-success glass-card uk-margin-bottom" uk-alert style="padding: 15px;">
                 <a href class="uk-alert-close" uk-close></a>
-                <p>@TempData["SuccessMessage"]</p>
+                <p class="uk-margin-remove"><span uk-icon="icon: check"></span> @TempData["SuccessMessage"]</p>
             </div>
         }
         @if (TempData["ErrorMessage"] != null)
         {
-            <div class="uk-alert-danger" uk-alert>
+            <div class="uk-alert-danger glass-card uk-margin-bottom" uk-alert style="padding: 15px;">
                 <a href class="uk-alert-close" uk-close></a>
-                <p>@TempData["ErrorMessage"]</p>
+                <p class="uk-margin-remove"><span uk-icon="icon: warning"></span> @TempData["ErrorMessage"]</p>
             </div>
         }
 

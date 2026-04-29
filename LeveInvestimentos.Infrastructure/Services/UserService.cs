@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using LeveInvestimentos.Application.Interfaces;
 using LeveInvestimentos.Domain.Entities;
+using LeveInvestimentos.Application.DTOs;
 using LeveInvestimentos.Infrastructure.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -29,10 +30,22 @@ namespace LeveInvestimentos.Infrastructure.Services
             return result == PasswordVerificationResult.Success ? user : null;
         }
 
-        public async Task<User> CreateAsync(User user, string password)
+        public async Task<User> CreateAsync(CreateUserDto dto)
         {
-            user.Id = Guid.NewGuid();
-            user.PasswordHash = _passwordHasher.HashPassword(user, password);
+            var user = new User
+            {
+                Id = Guid.NewGuid(),
+                FullName = dto.FullName,
+                Email = dto.Email,
+                BirthDate = dto.BirthDate,
+                MobilePhone = dto.MobilePhone,
+                LandlinePhone = dto.LandlinePhone,
+                Address = dto.Address,
+                PhotoUrl = dto.PhotoUrl,
+                Role = dto.Role
+            };
+
+            user.PasswordHash = _passwordHasher.HashPassword(user, dto.Password);
             
             _context.Users.Add(user);
             await _context.SaveChangesAsync();

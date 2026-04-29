@@ -26,7 +26,7 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
 
 builder.Services.AddAuthorization(options =>
 {
-    options.AddPolicy("ManagerOnly", policy => policy.RequireClaim("IsManager", "True"));
+    options.AddPolicy("ManagerOnly", policy => policy.RequireClaim(System.Security.Claims.ClaimTypes.Role, "Manager"));
 });
 
 // Services

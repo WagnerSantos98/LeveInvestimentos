@@ -5,21 +5,21 @@
 }
 
 <div class="uk-flex uk-flex-between uk-flex-middle uk-margin-bottom">
-    <h3 class="uk-margin-remove">Tarefas</h3>
+    <h2 class="uk-margin-remove text-gradient">Tarefas</h2>
 
-    @if (User.HasClaim("IsManager", "True"))
+    @if (User.HasClaim(System.Security.Claims.ClaimTypes.Role, "Manager"))
     {
         <a href="/Tasks/Create" class="uk-button uk-button-primary">
-            + Nova Tarefa
+            <span uk-icon="icon: plus"></span> Nova Tarefa
         </a>
     }
 </div>
 
 <ul uk-tab>
-    <li><a href="#">Minhas Tarefas</a></li>
-    @if (User.HasClaim("IsManager", "True"))
+    <li><a href="#" class="uk-text-bold">Minhas Tarefas</a></li>
+    @if (User.HasClaim(System.Security.Claims.ClaimTypes.Role, "Manager"))
     {
-        <li><a href="#">Criadas por Mim</a></li>
+        <li><a href="#" class="uk-text-bold">Criadas por Mim</a></li>
     }
 </ul>
 
@@ -27,8 +27,8 @@
 
     <!-- ================= MINHAS TAREFAS ================= -->
     <li>
-        <div class="uk-overflow-auto">
-            <table class="uk-table uk-table-divider uk-table-hover uk-table-middle">
+        <div class="glass-card uk-card uk-card-body uk-overflow-auto">
+            <table class="uk-table uk-table-hover uk-table-middle">
                 <thead>
                     <tr>
                         <th>Descrição</th>
@@ -42,7 +42,7 @@
                     @foreach (var task in Model.AssignedTasks)
                     {
                         <tr>
-                            <td>@task.Description</td>
+                            <td class="uk-text-bold">@task.Description</td>
                             <td>@task.Creator?.FullName</td>
                             <td>@task.DueDate.ToString("dd/MM/yyyy")</td>
 
@@ -64,7 +64,7 @@
 
                                     <!-- VER -->
                                     <a href="/Tasks/Details/@task.Id"
-                                       class="uk-button uk-button-small">
+                                       class="uk-button uk-button-small uk-button-default">
                                         Ver
                                     </a>
 
@@ -81,7 +81,7 @@
                                               asp-page-handler="Complete"
                                               asp-route-id="@task.Id"
                                               style="display:inline;">
-                                            <button class="uk-button uk-button-small uk-button-secondary">
+                                            <button class="uk-button uk-button-small uk-button-primary">
                                                 Concluir
                                             </button>
                                         </form>
@@ -93,14 +93,14 @@
                                               asp-page-handler="Reopen"
                                               asp-route-id="@task.Id"
                                               style="display:inline;">
-                                            <button class="uk-button uk-button-small">
+                                            <button class="uk-button uk-button-small uk-button-default">
                                                 Reabrir
                                             </button>
                                         </form>
                                     }
 
                                     <!-- EXCLUIR (SÓ MANAGER) -->
-                                    @if (User.HasClaim("IsManager", "True"))
+                                    @if (User.HasClaim(System.Security.Claims.ClaimTypes.Role, "Manager"))
                                     {
                                         <form method="post"
                                               asp-page-handler="Delete"
@@ -108,7 +108,7 @@
                                               style="display:inline;"
                                               onsubmit="return confirm('Deseja realmente excluir esta tarefa?');">
                                             <button class="uk-button uk-button-small uk-button-danger">
-                                                Excluir
+                                                <span uk-icon="icon: trash"></span>
                                             </button>
                                         </form>
                                     }
@@ -121,7 +121,7 @@
                     @if (!Model.AssignedTasks.Any())
                     {
                         <tr>
-                            <td colspan="5" class="uk-text-center">
+                            <td colspan="5" class="uk-text-center uk-text-muted">
                                 Nenhuma tarefa encontrada.
                             </td>
                         </tr>
@@ -132,11 +132,11 @@
     </li>
 
     <!-- ================= CRIADAS POR MIM ================= -->
-    @if (User.HasClaim("IsManager", "True"))
+    @if (User.HasClaim(System.Security.Claims.ClaimTypes.Role, "Manager"))
     {
         <li>
-            <div class="uk-overflow-auto">
-                <table class="uk-table uk-table-divider uk-table-hover uk-table-middle">
+            <div class="glass-card uk-card uk-card-body uk-overflow-auto">
+                <table class="uk-table uk-table-hover uk-table-middle">
                     <thead>
                         <tr>
                             <th>Descrição</th>
@@ -149,7 +149,7 @@
                         @foreach (var task in Model.CreatedTasks)
                         {
                             <tr>
-                                <td>@task.Description</td>
+                                <td class="uk-text-bold">@task.Description</td>
                                 <td>@task.Assignee?.FullName</td>
                                 <td>@task.DueDate.ToString("dd/MM/yyyy")</td>
 
@@ -169,7 +169,7 @@
                         @if (!Model.CreatedTasks.Any())
                         {
                             <tr>
-                                <td colspan="4" class="uk-text-center">
+                                <td colspan="4" class="uk-text-center uk-text-muted">
                                     Nenhuma tarefa criada.
                                 </td>
                             </tr>

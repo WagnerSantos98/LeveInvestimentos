@@ -59,7 +59,7 @@ namespace LeveInvestimentos.Web.Pages.Users
             [Required(ErrorMessage = "Senha é obrigatória")]
             public string Password { get; set; }
 
-            public bool IsManager { get; set; }
+            public LeveInvestimentos.Domain.Enums.UserRole Role { get; set; }
         }
 
         public void OnGet()
@@ -70,19 +70,21 @@ namespace LeveInvestimentos.Web.Pages.Users
         {
             if (!ModelState.IsValid) return Page();
 
-            var user = new User
+            var dto = new LeveInvestimentos.Application.DTOs.CreateUserDto
             {
                 FullName = Input.FullName,
                 Email = Input.Email,
                 BirthDate = Input.BirthDate,
                 LandlinePhone = Input.LandlinePhone,
                 MobilePhone = Input.MobilePhone,
-                Address =  $"{Input.Street}, {Input.Number} - {Input.Neighborhood}, {Input.City}/{Input.State} - CEP: {Input.ZipCode}",
+                Address = new LeveInvestimentos.Domain.ValueObjects.Address(
+                    Input.ZipCode, Input.Street, Input.Number, Input.Neighborhood, Input.City, Input.State),
                 PhotoUrl = Input.PhotoUrl,
-                IsManager = Input.IsManager
+                Password = Input.Password,
+                Role = Input.Role
             };
 
-            await _userService.CreateAsync(user, Input.Password);
+            await _userService.CreateAsync(dto);
 
             TempData["SuccessMessage"] = "Usuário criado com sucesso!";
             return RedirectToPage("/Users/Index");
