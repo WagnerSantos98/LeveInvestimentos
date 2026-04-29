@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using LeveInvestimentos.Domain.Entities;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
 namespace LeveInvestimentos.Infrastructure.Data
 {
@@ -10,7 +11,7 @@ namespace LeveInvestimentos.Infrastructure.Data
     {
         public static async Task SeedAsync(ApplicationDbContext context, IPasswordHasher<User> passwordHasher)
         {
-            await context.Database.EnsureCreatedAsync();
+            await context.Database.MigrateAsync();
 
             if (!context.Users.Any())
             {
@@ -20,8 +21,8 @@ namespace LeveInvestimentos.Infrastructure.Data
                     Email = "ti@leveinvestimentos.com.br",
                     FullName = "Administrador TI",
                     BirthDate = new DateTime(1990, 1, 1),
-                    IsManager = true,
-                    Address = "Sede LeveInvest",
+                    Role = LeveInvestimentos.Domain.Enums.UserRole.Manager,
+                    Address = new LeveInvestimentos.Domain.ValueObjects.Address("00000-000", "Rua TI", "123", "Centro", "São Paulo", "SP"),
                     MobilePhone = "000000000",
                     LandlinePhone = "000000000",
                     PhotoUrl = ""

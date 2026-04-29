@@ -5,12 +5,14 @@
 }
 
 <div class="uk-flex uk-flex-between uk-flex-middle uk-margin-bottom">
-    <h3>Usuários</h3>
-    <a href="/Users/Create" class="uk-button uk-button-primary">Novo Usuário</a>
+    <h2 class="text-gradient uk-margin-remove-bottom">Usuários da Equipe</h2>
+    <a href="/Users/Create" class="uk-button uk-button-primary">
+        <span uk-icon="icon: plus"></span> Novo Usuário
+    </a>
 </div>
 
-<div class="uk-overflow-auto">
-    <table class="uk-table uk-table-striped uk-table-hover">
+<div class="glass-card uk-card uk-card-body uk-overflow-auto">
+    <table class="uk-table uk-table-striped uk-table-hover uk-table-middle">
         <thead>
             <tr>
                 <th>Nome</th>
@@ -23,10 +25,19 @@
             @foreach (var user in Model.Users)
             {
                 <tr>
-                    <td>@user.FullName</td>
+                    <td class="uk-text-bold">@user.FullName</td>
                     <td>@user.Email</td>
                     <td>@user.MobilePhone</td>
-                    <td>@(user.IsManager ? "Gestor" : "Subordinado")</td>
+                    <td>
+                        @if(user.Role == LeveInvestimentos.Domain.Enums.UserRole.Manager)
+                        {
+                            <span class="uk-label uk-label-warning"><span uk-icon="icon: star"></span> Gestor</span>
+                        }
+                        else
+                        {
+                            <span class="uk-label"><span uk-icon="icon: user"></span> Comum</span>
+                        }
+                    </td>
                 </tr>
             }
         </tbody>

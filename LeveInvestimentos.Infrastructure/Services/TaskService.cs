@@ -58,6 +58,15 @@ namespace LeveInvestimentos.Infrastructure.Services
                 .ToListAsync();
         }
 
+        public async Task<IEnumerable<AppTask>> GetAllAsync()
+        {
+            return await _context.Tasks
+                .Include(t => t.Creator)
+                .Include(t => t.Assignee)
+                .OrderByDescending(t => t.CreatedAt)
+                .ToListAsync();
+        }
+
         public async Task<AppTask> GetByIdAsync(Guid id)
         {
             return await _context.Tasks

@@ -22,6 +22,16 @@ namespace LeveInvestimentos.Infrastructure.Data
                 entity.Property(e => e.FullName).IsRequired().HasMaxLength(200);
                 entity.Property(e => e.Email).IsRequired().HasMaxLength(200);
                 entity.HasIndex(e => e.Email).IsUnique();
+
+                entity.OwnsOne(e => e.Address, a => 
+                {
+                    a.Property(p => p.ZipCode).HasColumnName("ZipCode");
+                    a.Property(p => p.Street).HasColumnName("Street");
+                    a.Property(p => p.Number).HasColumnName("Number");
+                    a.Property(p => p.Neighborhood).HasColumnName("Neighborhood");
+                    a.Property(p => p.City).HasColumnName("City");
+                    a.Property(p => p.State).HasColumnName("State");
+                });
             });
 
             modelBuilder.Entity<AppTask>(entity =>
