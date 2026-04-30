@@ -68,11 +68,14 @@
                                         Ver
                                     </a>
 
-                                    <!-- EDITAR -->
-                                    <a href="/Tasks/Edit/@task.Id"
-                                       class="uk-button uk-button-small uk-button-default">
-                                        Editar
-                                    </a>
+                                    <!-- EDITAR (SÓ MANAGER) -->
+                                    @if (User.HasClaim(System.Security.Claims.ClaimTypes.Role, "Manager"))
+                                    {
+                                        <a href="/Tasks/Edit/@task.Id"
+                                           class="uk-button uk-button-small uk-button-default">
+                                            Editar
+                                        </a>
+                                    }
 
                                     <!-- CONCLUIR -->
                                     @if (task.Status == LeveInvestimentos.Domain.Enums.AppTaskStatus.Pending)
