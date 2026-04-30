@@ -8,14 +8,14 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+// Adicionar serviços ao contêiner
 builder.Services.AddRazorPages();
 
 // DbContext
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-// Authentication
+// Autenticação
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options =>
     {
@@ -29,7 +29,7 @@ builder.Services.AddAuthorization(options =>
     options.AddPolicy("ManagerOnly", policy => policy.RequireClaim(System.Security.Claims.ClaimTypes.Role, "Manager"));
 });
 
-// Services
+// Serviços
 builder.Services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<ITaskService, TaskService>();
@@ -47,7 +47,7 @@ using (var scope = app.Services.CreateScope())
     await DbSeeder.SeedAsync(context, passwordHasher);
 }
 
-// Configure the HTTP request pipeline.
+// Configura o pipeline de requisição HTTP
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Error");
@@ -55,6 +55,15 @@ if (!app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+// Desativa o cache para evitar problemas com as funções Voltar/Avançar do navegador
+app.Use(async(context, next) =>
+{
+    context.Response.Headers["Cache-Control"] = "no-cache, no-store, must-revalidate";
+    context.Response.Headers["Pragma"] = "no-cache";
+    context.Response.Headers["Expires"] = "-1";
+    await next();
+});
 
 app.UseRouting();
 
