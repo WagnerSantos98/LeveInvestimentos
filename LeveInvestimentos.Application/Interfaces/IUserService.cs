@@ -13,5 +13,6 @@ namespace LeveInvestimentos.Application.Interfaces
         Task<IEnumerable<User>> GetAllAsync();
         Task<User> CreateAsync(CreateUserDto dto);
         Task UpdateAsync(User user);
+        Task DeleteAsync(Guid id);
     }
 }
