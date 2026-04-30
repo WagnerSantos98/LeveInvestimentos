@@ -13,7 +13,7 @@ namespace LeveInvestimentos.Web.Pages
     public class LoginModel : PageModel
     {
         private readonly IUserService _userService;
-
+        
         public LoginModel(IUserService userService)
         {
             _userService = userService;
@@ -22,23 +22,31 @@ namespace LeveInvestimentos.Web.Pages
         [BindProperty]
         [Required(ErrorMessage = "O E-mail é obrigatório.")]
         [EmailAddress(ErrorMessage = "E-mail inválido.")]
-        public string Email { get; set; }
+        public string Email {get; set;}
 
         [BindProperty]
         [Required(ErrorMessage = "A Senha é obrigatória.")]
-        public string Password { get; set; }
+        public string Password {get; set;}
+        
+        [BindProperty]
+        public bool RememberMe {get; set;}
 
-        public void OnGet()
+        public IActionResult OnGet()
         {
+            if (User.Identity.IsAuthenticated)
+            {
+                return RedirectToPage("/Index");
+            }
+            return Page();
         }
 
         public async Task<IActionResult> OnPostAsync()
         {
-            if (!ModelState.IsValid) return Page();
+            if(!ModelState.IsValid) return Page();
 
             var user = await _userService.AuthenticateAsync(Email, Password);
 
-            if (user == null)
+            if(user == null)
             {
                 ModelState.AddModelError(string.Empty, "E-mail ou senha inválidos.");
                 return Page();
@@ -55,7 +63,13 @@ namespace LeveInvestimentos.Web.Pages
             var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
             var principal = new ClaimsPrincipal(identity);
 
-            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
+            var authProperties = new AuthenticationProperties
+            {
+              IsPersistent = RememberMe,
+              ExpiresUtc =   RememberMe ? System.DateTimeOffset.UtcNow.AddDays(30) : (System.DateTimeOffset?)null
+            };
+
+            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal, authProperties);
 
             return RedirectToPage("/Index");
         }
