@@ -19,6 +19,10 @@
                 <th>E-mail</th>
                 <th>Telefone Celular</th>
                 <th>Perfil</th>
+                @if (User.HasClaim(System.Security.Claims.ClaimTypes.Role, "Manager"))
+                {
+                    <th class="uk-text-center">Ações</th>
+                }
             </tr>
         </thead>
         <tbody>
@@ -38,6 +42,21 @@
                             <span class="uk-label"><span uk-icon="icon: user"></span> Comum</span>
                         }
                     </td>
+                    @if (User.HasClaim(System.Security.Claims.ClaimTypes.Role, "Manager"))
+                    {
+                        <td class="uk-text-center">
+                            <div class="uk-button-group">
+                                <a href="/Users/Edit/@user.Id" class="uk-button uk-button-small uk-button-default">
+                                    Editar
+                                </a>
+                                <form method="post" asp-page-handler="Delete" asp-route-id="@user.Id" style="display:inline;" onsubmit="return confirm('Deseja realmente excluir este usuário?');">
+                                    <button class="uk-button uk-button-small uk-button-danger">
+                                        <span uk-icon="icon: trash"></span>
+                                    </button>
+                                </form>
+                            </div>
+                        </td>
+                    }
                 </tr>
             }
         </tbody>
