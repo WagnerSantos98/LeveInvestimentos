@@ -1,0 +1,65 @@
+@page "{id:guid}"
+@model LeveInvestimentos.Web.Pages.Tasks.EditModel
+@{
+    ViewData["Title"] = "Editar Tarefa";
+}
+
+<div class="uk-container uk-margin-top">
+    <div class="uk-flex uk-flex-between uk-flex-middle uk-margin-bottom">
+        <h2 class="uk-margin-remove text-gradient">Editar Tarefa</h2>
+        <a href="/Tasks" class="uk-button uk-button-default">Voltar</a>
+    </div>
+
+    <div class="glass-card uk-card uk-card-body">
+        <form method="post">
+            <input type="hidden" asp-for="TaskItem.Id" />
+            <input type="hidden" asp-for="TaskItem.CreatorId" />
+            <input type="hidden" asp-for="TaskItem.CreatedAt" />
+
+            <div class="uk-margin">
+                <label class="uk-form-label uk-text-bold">Descrição</label>
+                <div class="uk-form-controls">
+                    <input asp-for="TaskItem.Description" class="uk-input" type="text" required />
+                    <span asp-validation-for="TaskItem.Description" class="uk-text-danger"></span>
+                </div>
+            </div>
+
+            <div class="uk-margin">
+                <label class="uk-form-label uk-text-bold">Data de Vencimento</label>
+                <div class="uk-form-controls">
+                    <input asp-for="TaskItem.DueDate" class="uk-input" type="date" required />
+                    <span asp-validation-for="TaskItem.DueDate" class="uk-text-danger"></span>
+                </div>
+            </div>
+
+            <div class="uk-margin">
+                <label class="uk-form-label uk-text-bold">Responsável</label>
+                <div class="uk-form-controls">
+                    <select asp-for="TaskItem.AssigneeId" class="uk-select" asp-items="Model.UserOptions" required>
+                        <option value="">Selecione um usuário</option>
+                    </select>
+                    <span asp-validation-for="TaskItem.AssigneeId" class="uk-text-danger"></span>
+                </div>
+            </div>
+
+            <div class="uk-margin">
+                <label class="uk-form-label uk-text-bold">Status</label>
+                <div class="uk-form-controls">
+                    <select asp-for="TaskItem.Status" class="uk-select">
+                        <option value="0">Pendente</option>
+                        <option value="1">Concluída</option>
+                    </select>
+                    <span asp-validation-for="TaskItem.Status" class="uk-text-danger"></span>
+                </div>
+            </div>
+
+            <div class="uk-margin-top">
+                <button type="submit" class="uk-button uk-button-primary">Salvar Alterações</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

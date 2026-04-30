@@ -140,10 +140,24 @@ namespace LeveInvestimentos.Infrastructure.Services
                 throw new Exception("Tarefa não encontrada.");
 
             // Regra: só quem criou pode excluir (ou você pode adaptar pra manager)
-            if (task.CreatorId != userId)
-                throw new UnauthorizedAccessException("Somente o criador pode excluir a tarefa.");
+            // Removendo a restrição para permitir que qualquer gestor exclua,
+            // pois a validação de gestor já é feita no controller/page.
 
             _context.Tasks.Remove(task);
+
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task UpdateAsync(AppTask task)
+        {
+            var existingTask = await _context.Tasks.FirstOrDefaultAsync(t => t.Id == task.Id);
+            if (existingTask == null)
+                throw new Exception("Tarefa não encontrada.");
+
+            existingTask.Description = task.Description;
+            existingTask.DueDate = task.DueDate;
+            existingTask.AssigneeId = task.AssigneeId;
+            existingTask.Status = task.Status;
 
             await _context.SaveChangesAsync();
         }

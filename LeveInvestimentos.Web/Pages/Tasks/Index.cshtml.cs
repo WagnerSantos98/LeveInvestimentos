@@ -32,7 +32,7 @@ namespace LeveInvestimentos.Web.Pages.Tasks
 
             AssignedTasks = await _taskService.GetAllByAssigneeAsync(userId);
 
-            if (User.HasClaim("IsManager", "True"))
+            if (User.HasClaim(ClaimTypes.Role, "Manager"))
             {
                 CreatedTasks = await _taskService.GetAllByCreatorAsync(userId);
             }
@@ -81,7 +81,7 @@ namespace LeveInvestimentos.Web.Pages.Tasks
             var userId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
 
             // Segurança extra de confirmação
-            if (!User.HasClaim("IsManager", "True"))
+            if (!User.HasClaim(ClaimTypes.Role, "Manager"))
             {
                 TempData["ErrorMessage"] = "Você não tem permissão para excluir tarefas.";
                 return RedirectToPage("/Tasks/Index");

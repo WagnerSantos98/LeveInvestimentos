@@ -1,0 +1,39 @@
+@page "{id:guid}"
+@model LeveInvestimentos.Web.Pages.Tasks.DetailsModel
+@{
+    ViewData["Title"] = "Detalhes da Tarefa";
+}
+
+<div class="uk-container uk-margin-top">
+    <div class="uk-flex uk-flex-between uk-flex-middle uk-margin-bottom">
+        <h2 class="uk-margin-remove text-gradient">Detalhes da Tarefa</h2>
+        <a href="/Tasks" class="uk-button uk-button-default">Voltar</a>
+    </div>
+
+    <div class="glass-card uk-card uk-card-body">
+        <h3 class="uk-card-title">@Model.TaskItem.Description</h3>
+        <ul class="uk-list uk-list-divider">
+            <li><strong>Status:</strong> 
+                @if (Model.TaskItem.Status == LeveInvestimentos.Domain.Enums.AppTaskStatus.Pending)
+                {
+                    <span class="uk-label uk-label-warning">Pendente</span>
+                }
+                else
+                {
+                    <span class="uk-label uk-label-success">Concluída</span>
+                }
+            </li>
+            <li><strong>Data de Vencimento:</strong> @Model.TaskItem.DueDate.ToString("dd/MM/yyyy")</li>
+            <li><strong>Criador:</strong> @Model.TaskItem.Creator?.FullName (@Model.TaskItem.Creator?.Email)</li>
+            <li><strong>Responsável:</strong> @Model.TaskItem.Assignee?.FullName (@Model.TaskItem.Assignee?.Email)</li>
+            <li><strong>Criada em:</strong> @Model.TaskItem.CreatedAt.ToString("dd/MM/yyyy HH:mm")</li>
+        </ul>
+
+        <div class="uk-margin-top">
+            @if (User.HasClaim(System.Security.Claims.ClaimTypes.Role, "Manager"))
+            {
+                <a href="/Tasks/Edit/@Model.TaskItem.Id" class="uk-button uk-button-primary">Editar</a>
+            }
+        </div>
+    </div>
+</div>
