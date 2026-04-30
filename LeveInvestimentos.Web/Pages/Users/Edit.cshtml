@@ -1,0 +1,78 @@
+@page "{id:guid}"
+@model LeveInvestimentos.Web.Pages.Users.EditModel
+@{
+    ViewData["Title"] = "Editar Usuário";
+}
+
+<div class="uk-container uk-margin-top">
+    <div class="uk-flex uk-flex-between uk-flex-middle uk-margin-bottom">
+        <h2 class="uk-margin-remove text-gradient">Editar Usuário</h2>
+        <a href="/Users" class="uk-button uk-button-default">Voltar</a>
+    </div>
+
+    <div class="glass-card uk-card uk-card-body">
+        <form method="post">
+            <input type="hidden" asp-for="UserItem.Id" />
+            <input type="hidden" asp-for="UserItem.PasswordHash" />
+
+            <div class="uk-margin">
+                <label class="uk-form-label uk-text-bold">Nome Completo</label>
+                <div class="uk-form-controls">
+                    <input asp-for="UserItem.FullName" class="uk-input" type="text" required />
+                    <span asp-validation-for="UserItem.FullName" class="uk-text-danger"></span>
+                </div>
+            </div>
+
+            <div class="uk-margin">
+                <label class="uk-form-label uk-text-bold">E-mail</label>
+                <div class="uk-form-controls">
+                    <input asp-for="UserItem.Email" class="uk-input" type="email" required />
+                    <span asp-validation-for="UserItem.Email" class="uk-text-danger"></span>
+                </div>
+            </div>
+
+            <div class="uk-margin">
+                <label class="uk-form-label uk-text-bold">Telefone Celular</label>
+                <div class="uk-form-controls">
+                    <input asp-for="UserItem.MobilePhone" class="uk-input" type="text" required />
+                    <span asp-validation-for="UserItem.MobilePhone" class="uk-text-danger"></span>
+                </div>
+            </div>
+            
+            <div class="uk-margin">
+                <label class="uk-form-label uk-text-bold">Telefone Fixo</label>
+                <div class="uk-form-controls">
+                    <input asp-for="UserItem.LandlinePhone" class="uk-input" type="text" />
+                    <span asp-validation-for="UserItem.LandlinePhone" class="uk-text-danger"></span>
+                </div>
+            </div>
+
+            <div class="uk-margin">
+                <label class="uk-form-label uk-text-bold">Endereço</label>
+                <div class="uk-form-controls">
+                    <input asp-for="UserItem.Address" class="uk-input" type="text" />
+                    <span asp-validation-for="UserItem.Address" class="uk-text-danger"></span>
+                </div>
+            </div>
+
+            <div class="uk-margin">
+                <label class="uk-form-label uk-text-bold">Perfil</label>
+                <div class="uk-form-controls">
+                    <select asp-for="UserItem.Role" class="uk-select">
+                        <option value="0">Comum</option>
+                        <option value="1">Gestor</option>
+                    </select>
+                    <span asp-validation-for="UserItem.Role" class="uk-text-danger"></span>
+                </div>
+            </div>
+
+            <div class="uk-margin-top">
+                <button type="submit" class="uk-button uk-button-primary">Salvar Alterações</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
